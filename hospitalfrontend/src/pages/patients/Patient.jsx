@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import "/src/pages/dashboard.css";
 
 function Patients() {
 
@@ -40,7 +41,7 @@ function Patients() {
 
                <div className="empty-state">
                   <h3>No Patients Found</h3>
-                  <p>Add your first patient to get started.</p>
+                  <p>Add your first patient to get started.</p><br /><br />
 
                   <Link
                      to="/patients/add"

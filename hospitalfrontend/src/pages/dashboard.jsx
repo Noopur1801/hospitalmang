@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import "./dashboard.css";
 
 function Dashboard() {
    return (
@@ -104,55 +105,61 @@ function Dashboard() {
 
             </div>
 
-         </div>
+         </div><br /><hr /><br /><br />
 
          {/* Recent Appointments */}
          <div className="dashboard-section">
 
             <div className="section-header">
-               <h2>Recent Appointments</h2>
+               <h2>Recent Appointments : </h2>
 
                <Link to="/appointments">
                   View All
                </Link>
-            </div>
+            </div><br /><br /><hr /><br />
 
             <div className="appointment-table">
+               <h2>Appointment Table</h2>
 
-               <div className="table-header">
-                  <span>Patient</span>
-                  <span>Doctor</span>
-                  <span>Date</span>
-                  <span>Status</span>
-               </div>
+               <table>
+                  <thead>
+                     <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                     </tr>
+                  </thead>
 
-               <div className="table-row">
-                  <span>Rahul Kumar</span>
-                  <span>Dr. Rahul Sharma</span>
-                  <span>19 Aug 2026</span>
-                  <span className="status confirmed">
-                     Confirmed
-                  </span>
-               </div>
+                  <tbody>
+                     <tr>
+                        <td>Rahul Kumar</td>
+                        <td>Dr. Rahul Sharma</td>
+                        <td>19 Aug 2026</td>
+                        <td>
+                           <span className="status confirmed">Confirmed</span>
+                        </td>
+                     </tr>
 
-               <div className="table-row">
-                  <span>Ananya Sharma</span>
-                  <span>Dr. Priya Mehta</span>
-                  <span>20 Aug 2026</span>
-                  <span className="status pending">
-                     Pending
-                  </span>
-               </div>
+                     <tr>
+                        <td>Ananya Sharma</td>
+                        <td>Dr. Priya Mehta</td>
+                        <td>20 Aug 2026</td>
+                        <td>
+                           <span className="status pending">Pending</span>
+                        </td>
+                     </tr>
 
-               <div className="table-row">
-                  <span>Vikas Singh</span>
-                  <span>Dr. Amit Verma</span>
-                  <span>21 Aug 2026</span>
-                  <span className="status confirmed">
-                     Confirmed
-                  </span>
-               </div>
-
+                     <tr>
+                        <td>Vikas Singh</td>
+                        <td>Dr. Amit Verma</td>
+                        <td>21 Aug 2026</td>
+                        <td>
+                           <span className="status confirmed">Confirmed</span>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
             </div>
 
          </div>
