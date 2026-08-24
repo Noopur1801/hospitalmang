@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "/src/pages/dashboard.css";
 
 function AddDoctor() {
 
@@ -67,7 +68,7 @@ function AddDoctor() {
                      required
                   />
 
-               </div>
+               </div><br />
 
                <div className="form-group">
 
@@ -76,13 +77,13 @@ function AddDoctor() {
                   <input
                      type="text"
                      name="specialty"
-                     placeholder="e.g. Cardiologist"
+                     placeholder=" e.g. Cardiologist "
                      value={doctor.specialty}
                      onChange={handleChange}
                      required
                   />
 
-               </div>
+               </div><br />
 
                <div className="form-group">
 
@@ -91,13 +92,13 @@ function AddDoctor() {
                   <input
                      type="text"
                      name="phone"
-                     placeholder="Phone number"
+                     placeholder=" Phone number "
                      value={doctor.phone}
                      onChange={handleChange}
                      required
                   />
 
-               </div>
+               </div><br />
 
                <div className="form-group">
 
@@ -106,13 +107,13 @@ function AddDoctor() {
                   <input
                      type="number"
                      name="experience"
-                     placeholder="Years of experience"
+                     placeholder=" Years of experience "
                      value={doctor.experience}
                      onChange={handleChange}
                      required
                   />
 
-               </div>
+               </div><br />
 
                <div className="form-actions">
 
@@ -122,7 +123,7 @@ function AddDoctor() {
                      onClick={() => navigate('/doctors')}
                   >
                      Cancel
-                  </button>
+                  </button>&nbsp;&nbsp;&nbsp;
 
                   <button
                      type="submit"

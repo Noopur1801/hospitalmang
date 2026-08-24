@@ -9,7 +9,7 @@ import Patients from './pages/patients/Patient';
 import Bookpatient from './pages/patients/Bookpatient';
 
 import Doctors from './pages/doctors/Doctor';
-import AddDoctor from './pages/doctors/AddDoctor';
+import AddDoctor from './pages/doctors/Adddoctor';
 
 import Appointments from './pages/appointments/Appointment';
 import Bookappointment from './pages/appointments/Bookappointment';

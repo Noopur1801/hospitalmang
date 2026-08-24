@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "/src/pages/dashboard.css";
 
 function Bookpatient() {
    const navigate = useNavigate();
@@ -90,7 +91,7 @@ function Bookpatient() {
                      onChange={handleChange}
                      required
                   />
-               </div>
+               </div><br />
 
                {/* Last Name */}
                <div className="form-group">
@@ -104,7 +105,7 @@ function Bookpatient() {
                      onChange={handleChange}
                      required
                   />
-               </div>
+               </div><br />
 
                {/* Date of Birth */}
                <div className="form-group">
@@ -117,7 +118,7 @@ function Bookpatient() {
                      onChange={handleChange}
                      required
                   />
-               </div>
+               </div><br />
 
                {/* Gender */}
                <div className="form-group">
@@ -132,7 +133,7 @@ function Bookpatient() {
                      <option value="Female">Female</option>
                      <option value="Other">Other</option>
                   </select>
-               </div>
+               </div><br />
 
                {/* Contact */}
                <div className="form-group">
@@ -146,7 +147,7 @@ function Bookpatient() {
                      onChange={handleChange}
                      required
                   />
-               </div>
+               </div><br />
 
                {/* Blood Group */}
                <div className="form-group">
@@ -166,7 +167,7 @@ function Bookpatient() {
                      <option value="AB+">AB+</option>
                      <option value="AB-">AB-</option>
                   </select>
-               </div>
+               </div><br /><br /><br />
 
                {/* Buttons */}
                <div className="form-actions">
@@ -177,7 +178,7 @@ function Bookpatient() {
                      onClick={() => navigate('/patients')}
                   >
                      Cancel
-                  </button>
+                  </button>&nbsp;&nbsp;&nbsp;
 
                   <button
                      type="submit"

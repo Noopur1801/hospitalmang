@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "/src/pages/dashboard.css";
 
 
 function Bookappointment() {
@@ -77,7 +78,7 @@ function Bookappointment() {
                         Vikas Singh
                      </option>
                   </select>
-               </div>
+               </div><br />
 
                {/* Doctor */}
                <div className="form-group">
@@ -105,7 +106,7 @@ function Bookappointment() {
                         Dr. Amit Verma - Orthopedic
                      </option>
                   </select>
-               </div>
+               </div><br />
 
                {/* Date */}
                <div className="form-group">
@@ -118,7 +119,7 @@ function Bookappointment() {
                      onChange={handleChange}
                      required
                   />
-               </div>
+               </div><br />
 
                {/* Time */}
                <div className="form-group">
@@ -131,7 +132,7 @@ function Bookappointment() {
                      onChange={handleChange}
                      required
                   />
-               </div>
+               </div><br />
 
                {/* Reason */}
                <div className="form-group full-width">
@@ -144,7 +145,7 @@ function Bookappointment() {
                      placeholder="Enter reason for appointment..."
                      rows="5"
                   />
-               </div>
+               </div><br />
 
                {/* Status */}
                <div className="form-group">
@@ -163,7 +164,7 @@ function Bookappointment() {
                         Confirmed
                      </option>
                   </select>
-               </div>
+               </div><br />
 
                {/* Buttons */}
                <div className="form-actions">
@@ -174,7 +175,7 @@ function Bookappointment() {
                      onClick={() => navigate('/appointments')}
                   >
                      Cancel
-                  </button>
+                  </button>&nbsp;&nbsp;&nbsp;
 
                   <button
                      type="submit"

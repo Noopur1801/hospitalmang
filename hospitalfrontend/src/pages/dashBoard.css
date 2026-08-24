@@ -130,162 +130,117 @@
    color: #1f2937;
 }
 
-/* =========================================
-   PATIENTS, DOCTORS & APPOINTMENTS PAGES
-========================================= */
+/* dashboard.css */
 
-/* Common Page Layout */
-.patients-page,
-.doctors-page,
-.appointments-page {
-  padding: 30px;
-  min-height: 100vh;
-  background-color: #f4f6f9;
+/* --- SHARED DASHBOARD STYLES --- */
+.dashboard-page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
 }
 
-/* Common Page Heading */
-.patients-page h1,
-.doctors-page h1,
-.appointments-page h1 ,
-.page-header h1 {
-  margin: 0 0 25px;
-  color: #1f2937;
-  font-size: 26px;
-}
-
-
-/* =========================================
-   PAGE HEADERS
-========================================= */
-
-.patient-header,
-.doctor-header,
-.appointment-header,
-.page-header,.doctor-card {
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 24px;
 }
 
-
-
-/* =========================================
-   COMMON BUTTONS
-========================================= */
-
-.primary-button{
-  background-color: #2696c7;
-  color: white;
-  border: none;
-  padding: 11px 18px;
-  border-radius: 7px;
+/* From Uiverse.io by felipesntr */ 
+.primary-button ,
+.secondary-button {
+  border: 2px solid #24b4fb;
+  background-color: #24b4fb;
+  border-radius: 0.9em;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
+  padding: 0.8em 1.2em 0.8em 1em;
+  transition: all ease-in-out 0.2s;
+  font-size: 16px;
+  border: 10px;
+}
+ 
+.primary-button span,
+.secondary-button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 600;
 }
 
-.primary-button:hover {
-  background-color: #1d7eaa;
+.primary-button:hover,
+.secondary-button:hover {
+  background-color: #0071e2;
 }
 
 
-/* =========================================
-   TABLE CONTAINERS
-========================================= */
-
-.data-card ,
-.doctor-grid{
+.data-card {
   background: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 20px;
 }
 
-
-
-/* =========================================
-   STATUS BADGES
-========================================= */
-
-.status,
-.doctor-status {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 15px;
-  font-size: 13px;
-  font-weight: 500;
+/* --- PATIENTS PAGE STYLES --- */
+.patient-table {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Appointment Status */
-.confirmed {
-  background-color: #dcfce7;
-  color: #16a34a;
+.table-header, .table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
 }
 
-.pending {
-  background-color: #fef3c7;
-  color: #d97706;
+.table-header {
+  font-weight: bold;
+  background-color: #f8f9fa;
 }
 
-.cancelled {
-  background-color: #fee2e2;
-  color: #dc2626;
+/* --- DOCTORS PAGE STYLES --- */
+.doctor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
 }
 
-/* Doctor Availability */
-.available {
-  background-color: #dcfce7;
-  color: #16a34a;
+.doctor-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
-.unavailable {
-  background-color: #fee2e2;
-  color: #dc2626;
+/* --- APPOINTMENTS PAGE STYLES --- */
+.appointment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-
-/* =========================================
-   COMMON ACTION BUTTONS
-========================================= */
-
-.action-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  margin-right: 10px;
-  font-size: 15px;
+.appointment-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #eee;
+  border-radius: 6px;
 }
 
+.status.confirmed {
+  color: green;
+  background-color: #e8f5e9;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
 
-/* =========================================
-   RESPONSIVE DESIGN
-========================================= */
-
-@media (max-width: 768px) {
-  .patients-page,
-  .doctors-page,
-  .appointments-page {
-    padding: 20px;
-  }
-
-  .patient-header,
-  .doctor-header,
-  .appointment-header,
-  .page-header{
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .patient-table th,
-  .doctor-table th,
-  .appointments-table th,
-  .patient-table td,
-  .doctor-table td,
-  .appointments-table td {
-    padding: 12px 10px;
-    white-space: nowrap;
-  }
+.status.pending {
+  color: orange;
+  background-color: #fff3e0;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
