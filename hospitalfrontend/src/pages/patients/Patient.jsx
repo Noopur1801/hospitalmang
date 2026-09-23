@@ -30,7 +30,7 @@ function Patients() {
                   <h3>No Patients Found</h3>
                   <p>Add your first patient to get started.</p>
                   <br /><br />
-                  <Link to="/patients/add" className="primary-button">
+                  <Link to="/patients/book" className="primary-button">
                      Add Patient
                   </Link>
                </div>

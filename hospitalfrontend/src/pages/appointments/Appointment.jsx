@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import "/src/pages/dashboard.css";
 
 function Appointments() {
-   const appointments = [
-      { id: 1, patient: 'Rahul Kumar', doctor: 'Dr. Priya Mehta', date: '19 Aug 2026', time: '10:00 AM', status: 'Confirmed' },
-      { id: 2, patient: 'Ananya Sharma', doctor: 'Dr. Amit Verma', date: '19 Aug 2026', time: '11:30 AM', status: 'Pending' },
-      { id: 3, patient: 'Vikas Singh', doctor: 'Dr. Rahul Sharma', date: '20 Aug 2026', time: '09:30 AM', status: 'Confirmed' }
-   ];
+   // 1. Create state to hold the real appointments from the database
+   const [appointments, setAppointments] = useState([]);
+
+   // 2. Fetch the appointments from your backend when the page loads
+   useEffect(() => {
+      fetch('http://localhost:5000/api/appointments')
+         .then(res => res.json())
+         .then(data => setAppointments(data))
+         .catch(error => console.error("Error fetching appointments:", error));
+   }, []);
 
    return (
       <div className="dashboard-page">
@@ -23,21 +28,44 @@ function Appointments() {
 
          <div className="data-card">
             <div className="appointment-list">
-               {appointments.map(appointment => (
-                  <div className="appointment-card" key={appointment.id}>
-                     <div>
-                        <h3>{appointment.patient}</h3>
-                        <p>{appointment.doctor}</p>
+               {appointments.length > 0 ? (
+                  appointments.map(appointment => (
+                     <div className="appointment-card" key={appointment._id}>
+                        <div>
+                           {/* Reach inside the populated object to get the names */}
+                           <h3>
+                              {appointment.patient
+                                 ? `${appointment.patient.firstName} ${appointment.patient.lastName}`
+                                 : 'Unknown Patient'}
+                           </h3>
+
+                           <p>
+                              {appointment.doctor
+                                 ? appointment.doctor.name
+                                 : 'Unknown Doctor'}
+                           </p>
+                        </div>
+
+                        <div>
+                           <strong>
+                              {/* Format the date nicely if needed */}
+                              {new Date(appointment.appointmentDate).toLocaleDateString()}
+                           </strong>
+                           <p>
+                              {new Date(appointment.appointmentDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                           </p>
+                        </div>
+
+                        <span className={`status ${appointment.status?.toLowerCase()}`}>
+                           {appointment.status}
+                        </span>
                      </div>
-                     <div>
-                        <strong>{appointment.date}</strong>
-                        <p>{appointment.time}</p>
-                     </div>
-                     <span className={`status ${appointment.status.toLowerCase()}`}>
-                        {appointment.status}
-                     </span>
+                  ))
+               ) : (
+                  <div style={{ textAlign: 'center', padding: '20px' }}>
+                     <p>No appointments found. Book one to get started!</p>
                   </div>
-               ))}
+               )}
             </div>
          </div>
       </div>

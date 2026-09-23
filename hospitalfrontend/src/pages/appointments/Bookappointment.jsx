@@ -1,197 +1,132 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "/src/pages/dashboard.css";
 
-
-function Bookappointment() {
+function BookAppointment() {
    const navigate = useNavigate();
 
-   const [formData, setFormData] = useState({
-      patient: '',
-      doctor: '',
-      date: '',
-      time: '',
-      reason: '',
-      status: 'Pending'
+   // 1. Lists to hold the data for our dropdown menus
+   const [patientsList, setPatientsList] = useState([]);
+   const [doctorsList, setDoctorsList] = useState([]);
+
+   // 2. State matching your strict Schema exactly
+   const [appointment, setAppointment] = useState({
+      patient: '', // Will hold the ObjectId
+      doctor: '',  // Will hold the ObjectId
+      appointmentDate: '',
+      reasonForVisit: ''
    });
 
+   // 3. Fetch patients and doctors when the page loads so we can select them
+   useEffect(() => {
+      fetch('http://localhost:5000/api/patients')
+         .then(res => res.json())
+         .then(data => setPatientsList(data));
+
+      fetch('http://localhost:5000/api/doctors')
+         .then(res => res.json())
+         .then(data => setDoctorsList(data));
+   }, []);
+
    const handleChange = (e) => {
-      setFormData({
-         ...formData,
+      setAppointment({
+         ...appointment,
          [e.target.name]: e.target.value
       });
    };
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
       e.preventDefault();
 
-      console.log('Appointment:', formData);
+      try {
+         const response = await fetch('http://localhost:5000/api/appointments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(appointment)
+         });
 
-      alert('Appointment booked successfully!');
-
-      navigate('/appointments');
+         if (response.ok) {
+            alert('Appointment successfully booked! 🎉');
+            navigate('/appointments');
+         } else {
+            alert('Backend rejected it. Check terminal.');
+         }
+      } catch (error) {
+         console.error('Error saving appointment:', error);
+      }
    };
 
    return (
-      <div>
-
-         {/* Page Header */}
+      <div className="dashboard-page">
          <div className="page-header">
             <div>
                <h1>Book Appointment</h1>
-               <p>Schedule an appointment for a patient</p>
+               <p>Schedule a new patient visit</p>
             </div>
          </div>
 
-         {/* Appointment Form */}
          <div className="data-card">
+            <form className="patient-form" onSubmit={handleSubmit}>
 
-            <form
-               className="patient-form"
-               onSubmit={handleSubmit}
-            >
-
-               {/* Patient */}
                <div className="form-group">
-                  <label>Patient</label>
-
-                  <select
-                     name="patient"
-                     value={formData.patient}
-                     onChange={handleChange}
-                     required
-                  >
-                     <option value="">
-                        Select Patient
-                     </option>
-
-                     <option value="Rahul Kumar">
-                        Rahul Kumar
-                     </option>
-
-                     <option value="Ananya Sharma">
-                        Ananya Sharma
-                     </option>
-
-                     <option value="Vikas Singh">
-                        Vikas Singh
-                     </option>
+                  <label>Select Patient</label>
+                  <select name="patient" value={appointment.patient} onChange={handleChange} required>
+                     <option value="">-- Choose a Patient --</option>
+                     {patientsList.map(p => (
+                        // We display the name, but save the _id as the value!
+                        <option key={p._id} value={p._id}>{p.firstName} {p.lastName}</option>
+                     ))}
                   </select>
                </div><br />
 
-               {/* Doctor */}
                <div className="form-group">
-                  <label>Doctor</label>
-
-                  <select
-                     name="doctor"
-                     value={formData.doctor}
-                     onChange={handleChange}
-                     required
-                  >
-                     <option value="">
-                        Select Doctor
-                     </option>
-
-                     <option value="Dr. Rahul Sharma">
-                        Dr. Rahul Sharma - Cardiologist
-                     </option>
-
-                     <option value="Dr. Priya Mehta">
-                        Dr. Priya Mehta - Dermatologist
-                     </option>
-
-                     <option value="Dr. Amit Verma">
-                        Dr. Amit Verma - Orthopedic
-                     </option>
+                  <label>Select Doctor</label>
+                  <select name="doctor" value={appointment.doctor} onChange={handleChange} required>
+                     <option value="">-- Choose a Doctor --</option>
+                     {doctorsList.map(d => (
+                        <option key={d._id} value={d._id}>{d.name} ({d.specialization})</option>
+                     ))}
                   </select>
                </div><br />
 
-               {/* Date */}
                <div className="form-group">
-                  <label>Appointment Date</label>
-
+                  <label>Appointment Date & Time</label>
+                  {/* datetime-local lets you pick both date and time in one box */}
                   <input
-                     type="date"
-                     name="date"
-                     value={formData.date}
+                     type="datetime-local"
+                     name="appointmentDate"
+                     value={appointment.appointmentDate}
                      onChange={handleChange}
                      required
                   />
                </div><br />
 
-               {/* Time */}
                <div className="form-group">
-                  <label>Appointment Time</label>
-
-                  <input
-                     type="time"
-                     name="time"
-                     value={formData.time}
-                     onChange={handleChange}
-                     required
-                  />
-               </div><br />
-
-               {/* Reason */}
-               <div className="form-group full-width">
                   <label>Reason for Visit</label>
-
-                  <textarea
-                     name="reason"
-                     value={formData.reason}
+                  <input
+                     type="text"
+                     name="reasonForVisit"
+                     placeholder="e.g. Fever and cough"
+                     value={appointment.reasonForVisit}
                      onChange={handleChange}
-                     placeholder="Enter reason for appointment..."
-                     rows="5"
+                     required
                   />
                </div><br />
 
-               {/* Status */}
-               <div className="form-group">
-                  <label>Status</label>
-
-                  <select
-                     name="status"
-                     value={formData.status}
-                     onChange={handleChange}
-                  >
-                     <option value="Pending">
-                        Pending
-                     </option>
-
-                     <option value="Confirmed">
-                        Confirmed
-                     </option>
-                  </select>
-               </div><br />
-
-               {/* Buttons */}
                <div className="form-actions">
-
-                  <button
-                     type="button"
-                     className="secondary-button"
-                     onClick={() => navigate('/appointments')}
-                  >
+                  <button type="button" className="secondary-button" onClick={() => navigate('/appointments')}>
                      Cancel
                   </button>&nbsp;&nbsp;&nbsp;
 
-                  <button
-                     type="submit"
-                     className="primary-button"
-                  >
+                  <button type="submit" className="primary-button">
                      Book Appointment
                   </button>
-
                </div>
 
             </form>
-
          </div>
-
       </div>
    );
 }
 
-export default Bookappointment;
+export default BookAppointment;

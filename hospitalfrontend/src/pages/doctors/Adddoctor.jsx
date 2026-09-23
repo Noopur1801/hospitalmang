@@ -1,64 +1,64 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "/src/pages/dashboard.css";
 
 function AddDoctor() {
-
    const navigate = useNavigate();
 
+   // 1. UPDATED STATE: Matches backend Schema exactly!
    const [doctor, setDoctor] = useState({
       name: '',
-      specialty: '',
+      specialization: '',
       phone: '',
-      experience: ''
+      experience: '',
+      consultationFee: ''
    });
 
    const handleChange = (e) => {
-
       setDoctor({
          ...doctor,
          [e.target.name]: e.target.value
       });
-
    };
 
-   const handleSubmit = (e) => {
-
+   const handleSubmit = async (e) => {
       e.preventDefault();
 
-      console.log('Doctor:', doctor);
+      try {
+         const response = await fetch('http://localhost:5000/api/doctors', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(doctor)
+         });
 
-      alert('Doctor added successfully!');
-
-      navigate('/doctors');
-
+         if (response.ok) {
+            alert('Doctor added successfully!');
+            navigate('/doctors');
+         } else {
+            alert('Failed to add doctor. Check your backend.');
+         }
+      } catch (error) {
+         console.error('Error saving doctor:', error);
+         alert('Server error. Is your backend running?');
+      }
    };
 
    return (
-
-      <div>
-
+      <div className="dashboard-page">
          <div className="page-header">
-
             <div>
                <h1>Add Doctor</h1>
                <p>Register a new doctor</p>
             </div>
-
          </div>
 
          <div className="data-card">
-
-            <form
-               className="patient-form"
-               onSubmit={handleSubmit}
-            >
+            <form className="patient-form" onSubmit={handleSubmit}>
 
                <div className="form-group">
-
                   <label>Doctor Name</label>
-
                   <input
                      type="text"
                      name="name"
@@ -67,28 +67,23 @@ function AddDoctor() {
                      onChange={handleChange}
                      required
                   />
-
                </div><br />
 
+               {/* 2. UPDATED INPUT: Changed name to "specialization" */}
                <div className="form-group">
-
                   <label>Specialization</label>
-
                   <input
                      type="text"
-                     name="specialty"
+                     name="specialization"
                      placeholder=" e.g. Cardiologist "
-                     value={doctor.specialty}
+                     value={doctor.specialization}
                      onChange={handleChange}
                      required
                   />
-
                </div><br />
 
                <div className="form-group">
-
                   <label>Phone</label>
-
                   <input
                      type="text"
                      name="phone"
@@ -97,13 +92,10 @@ function AddDoctor() {
                      onChange={handleChange}
                      required
                   />
-
                </div><br />
 
                <div className="form-group">
-
-                  <label>Experience</label>
-
+                  <label>Experience (Years)</label>
                   <input
                      type="number"
                      name="experience"
@@ -112,11 +104,22 @@ function AddDoctor() {
                      onChange={handleChange}
                      required
                   />
+               </div><br />
 
+               {/* 3. NEW INPUT: Consultation Fee */}
+               <div className="form-group">
+                  <label>Consultation Fee (₹)</label>
+                  <input
+                     type="number"
+                     name="consultationFee"
+                     placeholder=" e.g. 500 "
+                     value={doctor.consultationFee}
+                     onChange={handleChange}
+                     required
+                  />
                </div><br />
 
                <div className="form-actions">
-
                   <button
                      type="button"
                      className="secondary-button"
@@ -131,15 +134,11 @@ function AddDoctor() {
                   >
                      Save Doctor
                   </button>
-
                </div>
 
             </form>
-
          </div>
-
       </div>
-
    );
 }
 
